@@ -1,18 +1,7 @@
-import React from 'react'
-import AppRoutes from './routes/AppRoutes'
-import Header from './compotents/Header'
-import Footer from './compotents/Footer'
+import AppRoutes from "./routes/AppRoutes";
 
-const App = () => {
-  return (
-    
-    <>
-    <Header/>
-    <AppRoutes/>
-    <Footer/>
-
-    </>
-  )
+function App() {
+  return <AppRoutes />;
 }
 
-export default App
+export default App;
