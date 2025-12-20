@@ -6,6 +6,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Cart from "../pages/Cart";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
   return (
@@ -24,9 +25,13 @@ const AppRoutes = () => {
       <Route
         path="/cart"
         element={
-          <UserLayout>
+          <ProtectedRoute>
+
+             <UserLayout>
             <Cart />
           </UserLayout>
+          </ProtectedRoute>
+         
         }
       />
 
