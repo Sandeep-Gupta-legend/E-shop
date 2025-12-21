@@ -28,6 +28,7 @@ const Header = () => {
         }
         
         <Link to='/cart'>Cart</Link>
+        <Link to="/products">Products</Link>
       </div>
      
       

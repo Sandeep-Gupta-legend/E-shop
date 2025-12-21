@@ -7,7 +7,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Cart from "../pages/Cart";
 import ProtectedRoute from "./ProtectedRoute";
-
+import Products from "../pages/Products";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -53,6 +53,16 @@ const AppRoutes = () => {
           </AuthLayout>
         }
       />
+
+      <Route
+  path="/products"
+  element={
+    <UserLayout>
+      <Products />
+    </UserLayout>
+  }
+/>
+
 
     </Routes>
   );
