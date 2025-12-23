@@ -8,6 +8,8 @@ import Register from "../pages/Register";
 import Cart from "../pages/Cart";
 import ProtectedRoute from "./ProtectedRoute";
 import Products from "../pages/Products";
+import ProductDetails from "../pages/ProductDetails";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -59,6 +61,15 @@ const AppRoutes = () => {
   element={
     <UserLayout>
       <Products />
+    </UserLayout>
+  }
+/>
+
+<Route
+  path="/product/:id"
+  element={
+    <UserLayout>
+      <ProductDetails />
     </UserLayout>
   }
 />
