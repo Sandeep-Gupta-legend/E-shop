@@ -8,6 +8,8 @@ export const fetchProducts = async () => {
       price: 79999,
       image: "https://picsum.photos/400/300?random=1",
       category: "mobile",
+      
+
     },
     {
       _id: "2",
