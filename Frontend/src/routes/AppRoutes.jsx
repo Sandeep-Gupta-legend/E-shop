@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+
 import UserLayout from "../layouts/UserLayout";
 import AuthLayout from "../layouts/AuthLayout";
 
@@ -6,15 +7,16 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Cart from "../pages/Cart";
-import ProtectedRoute from "./ProtectedRoute";
 import Products from "../pages/Products";
 import ProductDetails from "../pages/ProductDetails";
+import OrderSuccess from "../pages/OrderSuccess";
+
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
   return (
     <Routes>
-
-      {/* User Routes */}
+      {/* HOME */}
       <Route
         path="/"
         element={
@@ -24,20 +26,50 @@ const AppRoutes = () => {
         }
       />
 
+      {/* PRODUCTS */}
+      <Route
+        path="/products"
+        element={
+          <UserLayout>
+            <Products />
+          </UserLayout>
+        }
+      />
+
+      <Route
+        path="/product/:id"
+        element={
+          <UserLayout>
+            <ProductDetails />
+          </UserLayout>
+        }
+      />
+
+      {/* CART (Protected) */}
       <Route
         path="/cart"
         element={
           <ProtectedRoute>
-
-             <UserLayout>
-            <Cart />
-          </UserLayout>
+            <UserLayout>
+              <Cart />
+            </UserLayout>
           </ProtectedRoute>
-         
         }
       />
 
-      {/* Auth Routes */}
+      {/* ORDER SUCCESS */}
+      <Route
+        path="/order-success"
+        element={
+          <ProtectedRoute>
+            <UserLayout>
+              <OrderSuccess />
+            </UserLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      {/* AUTH */}
       <Route
         path="/login"
         element={
@@ -55,26 +87,6 @@ const AppRoutes = () => {
           </AuthLayout>
         }
       />
-
-      <Route
-  path="/products"
-  element={
-    <UserLayout>
-      <Products />
-    </UserLayout>
-  }
-/>
-
-<Route
-  path="/product/:id"
-  element={
-    <UserLayout>
-      <ProductDetails />
-    </UserLayout>
-  }
-/>
-
-
     </Routes>
   );
 };

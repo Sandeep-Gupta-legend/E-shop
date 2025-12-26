@@ -1,26 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
   removeFromCart,
-  increaseQty,
-  decreaseQty,
+  updateQuantity,
 } from "../redux/slices/cartSlice";
 
 const Cart = () => {
+  const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  const cartState = useSelector((state) => state.cart);
-  const cartItems = Array.isArray(cartState?.cartItems)
-    ? cartState.cartItems
-    : [];
-
-  const total = cartItems.reduce(
-    (acc, item) => acc + (item.price || 0) * (item.qty || 1),
+  const totalPrice = cartItems.reduce(
+    (acc, item) => acc + item.price * item.qty,
     0
   );
 
   if (cartItems.length === 0) {
     return (
-      <div className="p-6 text-center text-gray-600">
+      <div className="p-6 text-center text-lg">
         Your cart is empty
       </div>
     );
@@ -28,44 +23,38 @@ const Cart = () => {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6">Shopping Cart</h2>
+      <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
 
       {cartItems.map((item) => (
         <div
           key={item._id}
-          className="flex gap-4 border-b py-4"
+          className="flex gap-4 items-center border-b py-4"
         >
           <img
             src={item.image}
-            alt={item.name}
-            className="w-24 h-24 object-cover"
-            onError={(e) => {
-              e.target.src = "https://picsum.photos/200/200";
-            }}
+            className="w-20 h-20 object-cover"
+            alt=""
           />
 
           <div className="flex-1">
             <h3 className="font-semibold">{item.name}</h3>
             <p>₹{item.price}</p>
-
-            <div className="flex items-center gap-3 mt-2">
-              <button
-                onClick={() => dispatch(decreaseQty(item._id))}
-                className="px-2 border"
-              >
-                -
-              </button>
-
-              <span>{item.qty}</span>
-
-              <button
-                onClick={() => dispatch(increaseQty(item._id))}
-                className="px-2 border"
-              >
-                +
-              </button>
-            </div>
           </div>
+
+          <input
+            type="number"
+            min="1"
+            value={item.qty}
+            onChange={(e) =>
+              dispatch(
+                updateQuantity({
+                  id: item._id,
+                  qty: Number(e.target.value),
+                })
+              )
+            }
+            className="w-16 border px-2 py-1"
+          />
 
           <button
             onClick={() => dispatch(removeFromCart(item._id))}
@@ -76,8 +65,8 @@ const Cart = () => {
         </div>
       ))}
 
-      <div className="text-right mt-6">
-        <h3 className="text-xl font-bold">Total: ₹{total}</h3>
+      <div className="text-right mt-6 text-xl font-bold">
+        Total: ₹{totalPrice}
       </div>
     </div>
   );

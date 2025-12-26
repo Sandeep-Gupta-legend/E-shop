@@ -1,17 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// SAFE PARSE FUNCTION
-const getCartFromStorage = () => {
-  try {
-    const data = JSON.parse(localStorage.getItem("cartItems"));
-    return Array.isArray(data) ? data : [];
-  } catch (error) {
-    return [];
-  }
-};
+const cartFromStorage = JSON.parse(localStorage.getItem("cartItems")) || [];
 
 const initialState = {
-  cartItems: getCartFromStorage(),
+  cartItems: cartFromStorage,
 };
 
 const cartSlice = createSlice({
@@ -31,7 +23,10 @@ const cartSlice = createSlice({
         state.cartItems.push({ ...item, qty: 1 });
       }
 
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      localStorage.setItem(
+        "cartItems",
+        JSON.stringify(state.cartItems)
+      );
     },
 
     removeFromCart(state, action) {
@@ -39,27 +34,25 @@ const cartSlice = createSlice({
         (item) => item._id !== action.payload
       );
 
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      localStorage.setItem(
+        "cartItems",
+        JSON.stringify(state.cartItems)
+      );
     },
 
-    increaseQty(state, action) {
-      const item = state.cartItems.find(
-        (x) => x._id === action.payload
+    updateQuantity(state, action) {
+      const { id, qty } = action.payload;
+
+      const item = state.cartItems.find((i) => i._id === id);
+
+      if (item) {
+        item.qty = qty;
+      }
+
+      localStorage.setItem(
+        "cartItems",
+        JSON.stringify(state.cartItems)
       );
-
-      if (item) item.qty += 1;
-
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
-    },
-
-    decreaseQty(state, action) {
-      const item = state.cartItems.find(
-        (x) => x._id === action.payload
-      );
-
-      if (item && item.qty > 1) item.qty -= 1;
-
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
 
     clearCart(state) {
@@ -72,8 +65,7 @@ const cartSlice = createSlice({
 export const {
   addToCart,
   removeFromCart,
-  increaseQty,
-  decreaseQty,
+  updateQuantity,
   clearCart,
 } = cartSlice.actions;
 
