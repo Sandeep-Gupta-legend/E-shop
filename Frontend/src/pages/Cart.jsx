@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   removeFromCart,
   updateQuantity,
@@ -7,6 +8,7 @@ import {
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.qty,
@@ -67,6 +69,14 @@ const Cart = () => {
 
       <div className="text-right mt-6 text-xl font-bold">
         Total: ₹{totalPrice}
+      </div>
+      <div className="text-right mt-4">
+        <button
+          onClick={() => navigate("/checkout")}
+          className="mt-2 bg-black text-white px-6 py-2 rounded"
+        >
+          Proceed to Checkout
+        </button>
       </div>
     </div>
   );

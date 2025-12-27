@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Cart from "../pages/Cart";
+import Checkout from "../pages/Checkout";
 import Products from "../pages/Products";
 import ProductDetails from "../pages/ProductDetails";
 import OrderSuccess from "../pages/OrderSuccess";
@@ -52,6 +53,18 @@ const AppRoutes = () => {
           <ProtectedRoute>
             <UserLayout>
               <Cart />
+            </UserLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      {/* CHECKOUT (Protected) */}
+      <Route
+        path="/checkout"
+        element={
+          <ProtectedRoute>
+            <UserLayout>
+              <Checkout />
             </UserLayout>
           </ProtectedRoute>
         }

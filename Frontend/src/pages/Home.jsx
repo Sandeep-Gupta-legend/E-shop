@@ -1,6 +1,7 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
+import { useSelector, useDispatch } from "react-redux";
+import { setSearch } from "../redux/slices/uiSlice";
 
 const productsData = [
   {
@@ -30,10 +31,11 @@ const productsData = [
 ];
 
 const Home = () => {
-  const [search, setSearch] = useState("");
+  const dispatch = useDispatch();
+  const search = useSelector((state) => state.ui.search || "");
 
   const filteredProducts = productsData.filter((p) =>
-    p.name.toLowerCase().includes(search.toLowerCase())
+    p.name.toLowerCase().includes((search || "").toLowerCase())
   );
 
   return (
@@ -50,7 +52,7 @@ const Home = () => {
         </p>
 
         <div className="flex justify-center">
-          <SearchBar value={search} onChange={setSearch} />
+          <SearchBar value={search} onChange={(val) => dispatch(setSearch(val))} />
         </div>
       </section>
 
